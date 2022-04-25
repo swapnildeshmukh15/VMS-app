@@ -1,0 +1,85 @@
+version: '2.0'
+
+services:
+
+  vms-client:
+    container_name: vms-client
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    build:
+      context: .
+      dockerfile: vmsClient/DockerFile
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    volumes:
+      - '.:/project/VMS-app'
+
+  vmsprocessor:
+    container_name: vmsprocessor
+    build:
+      context: .
+      dockerfile: vmsProcessor/DockerFile
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    depends_on:
+      - validator
+    volumes:
+      - '.:/project/VMS-app'
+
+  sawtooth-rest-api:
+    container_name: rest-api
+    image: hyperledger/sawtooth-rest-api:chime
+    expose:
+      - 8008
+    ports:
+      - '8008:8008'
+    depends_on:
+      - validator
+    entrypoint: |
+      sawtooth-rest-api -vvv
+        --connect tcp://validator:4004
+        --bind sawtooth-rest-api:8008
+  settings-tp:
+    image: hyperledger/sawtooth-settings-tp:chime
+    depends_on:
+      - validator
+    command: settings-tp -vv --connect tcp://validator:4004
+  identity-tp:
+    image: hyperledger/sawtooth-identity-tp:1.0
+    container_name: sawtooth-identity-tp-default
+    depends_on:
+      - validator
+    entrypoint: identity-tp -vv -C tcp://validator:4004
+  validator:
+    image: hyperledger/sawtooth-validator:chime
+    container_name: validator
+    expose:
+      - 4004
+    ports:
+      - "4004:4004"
+    # start the validator with an empty genesis batch
+    entrypoint: |
+      bash -c "
+        if [ ! -f /etc/sawtooth/keys/validator.priv ]; then
+        sawadm keygen &&
+        sawtooth keygen my_key && sawtooth keygen registration && sawtooth keygen insurance && sawtooth keygen pollution && sawtooth keygen police && sawtooth keygen government &&
+        sawset genesis -k /root/.sawtooth/keys/my_key.priv &&
+        sawset proposal create \
+          -k /root/.sawtooth/keys/my_key.priv \
+          sawtooth.consensus.algorithm.name=Devmode \
+          sawtooth.consensus.algorithm.version=0.1 \
+          -o config.batch && \
+        sawadm genesis config-genesis.batch config.batch
+        fi;
+        sawtooth-validator -vvv \
+          --endpoint tcp://validator:8800 \
+          --bind component:tcp://eth0:4004 \
+          --bind network:tcp://eth0:8800 \
+          --bind consensus:tcp://eth0:5050 \
+      "

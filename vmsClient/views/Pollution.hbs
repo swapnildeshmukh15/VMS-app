@@ -1,0 +1,35 @@
+<!-- Pollution Department Page -->
+
+<center>
+  <h3> Pollution Department </h3>
+  <img src="/images/icon.png" height="75px">
+  <div class="row">
+    <div class="col s6 offset-s3"
+      style="background-color: rgb(240, 232, 232); opacity: 1.0; height: 550px; padding: 20px 20px; border: 1px solid; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
+      <form autocomplete="off">
+        <div>
+          <br>
+          <label style="font-size:16px; float:left; color:black;">Enter Private Key</label>
+          <input type="text" id="private3" required>
+          <label style="font-size:16px; float:left; color:black;">Enter Vin Number</label>
+          <input type="number" id="vin3" required>
+          <label style="font-size:16px; float:left; color:black;">Enter Pollution Amount </label>
+          <input type="number" id="amount3" required>
+          <label style="font-size:16px; float:left; color:black;">Enter Pollution Company </label>
+          <input type="text" id="company3" required>
+          <label style="font-size:16px; float:left; color:black;">Enter Date of Payment </label>
+          <input type="date" id="date3" required>
+          <br>
+        </div>
+        <div>
+          <br />
+          <button type="submit" onclick="pollutionDepartment(event)" style="background-color: #0066ff"
+            class="waves-effect waves-light btn-small">Submit</button>
+          <br>
+          <button type="reset" style="float: right; background-color: #ff0000"
+            class="waves-effect waves-light btn-small">Clear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</center>

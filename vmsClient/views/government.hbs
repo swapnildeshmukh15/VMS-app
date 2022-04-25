@@ -1,0 +1,48 @@
+<!-- Government Vehicle Registration Page -->
+
+<center>
+  <h3> Government Vehicles Registration </h3>
+  <img src="/images/icon.png" height="75px">
+  <div class="row">
+    <div style="float:right; margin-right:50px;">
+      <a href="/delete1">
+        <button type="button" style="background-color: #ff0000" class="waves-effect waves-light btn-small">Delete
+          Vehicle Details</button>
+      </a><br><br>
+      <a href="/transactionID">
+        <button type="button" style="background-color: #0066ff" class="waves-effect waves-light btn-small">Latest
+          Transaction ID</button>
+      </a><br><br>
+      <a href="/transactionReceipts">
+        <button type="button" style="background-color: #0066ff" class="waves-effect waves-light btn-small">Transaction
+          Receipts</button>
+      </a>
+    </div>
+    <div class="col s6 offset-s3"
+      style="background-color: rgb(240, 232, 232); opacity: 1.0; height: 550px; padding: 20px 20px; border: 1px solid; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
+      <form autocomplete="off">
+        <div>
+          <br>
+          <label style="font-size:16px; float:left; color:black;">Enter Private Key</label>
+          <input type="text" id="private7" required>
+          <label style="font-size:16px; float:left; color:black;">Enter Vin Number</label>
+          <input type="text" id="vin7" required>
+          <label style="font-size:16px; float:left; color:black;">Enter Department</label>
+          <input type="text" id="department7" required>
+          <label style="font-size:16px; float:left; color:black;">Enter Model</label>
+          <input type="text" id="make7" required>
+          <label style="font-size:16px; float:left; color:black;">Enter Date of Registration</label>
+          <input type="date" id="date7" required>
+        </div>
+        <div>
+          <br />
+          <button type="submit" onclick="governmentVehicleDepartment(event)" style="background-color: #0066ff"
+            class="waves-effect waves-light btn-small">Submit</button>
+          <br>
+          <button type="reset" style="float: right; background-color: #ff0000"
+            class="waves-effect waves-light btn-small">Clear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</center>
