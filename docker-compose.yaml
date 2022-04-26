@@ -50,12 +50,12 @@ services:
     depends_on:
       - validator
     command: settings-tp -vv --connect tcp://validator:4004
-  identity-tp:
-    image: hyperledger/sawtooth-identity-tp:1.0
-    container_name: sawtooth-identity-tp-default
-    depends_on:
-      - validator
-    entrypoint: identity-tp -vv -C tcp://validator:4004
+  # identity-tp:
+  #   image: hyperledger/sawtooth-identity-tp:1.0
+  #   container_name: sawtooth-identity-tp-default
+  #   depends_on:
+  #     - validator
+  #   entrypoint: identity-tp -vv -C tcp://validator:4004
   validator:
     image: hyperledger/sawtooth-validator:chime
     container_name: validator
