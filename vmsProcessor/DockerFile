@@ -2,19 +2,19 @@
 FROM ubuntu:xenial
 
 RUN \
-   apt-get update; \
-   apt-get install curl -y; \
-   curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x8AA7AF1F1091A5FD' | apt-key add - \
-   && echo "deb [arch=amd64] http://repo.sawtooth.me/ubuntu/bumper/stable xenial universe" >> /etc/apt/sources.list \
-   && apt-get clean \
-   && apt-get update \
-   && apt-get install -y -q \
-   apt-transport-https \
-   build-essential \
-   ca-certificates \
-   && rm -rf /var/lib/apt/lists/*
+    apt-get update; \
+    apt-get install curl -y; \
+    curl -sSL sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD \
+    && sudo add-apt-repository\ "deb \[arch=amd64\] <http://repo.sawtooth.me/ubuntu/chime/stable> bionic universe" >> /etc/apt/sources.list \
+    && apt-get clean \
+    && apt-get update \
+    && apt-get install -y -q \
+    apt-transport-https \
+    build-essential \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install -y nodejs
 
 WORKDIR /project/VMS-app/vmsProcessor
@@ -24,15 +24,15 @@ CMD npm install && npm start
 EXPOSE 4004/tcp
 
 RUN \
- if [ ! -z $HTTP_PROXY ] && [ -z $http_proxy ]; then \
-  http_proxy=$HTTP_PROXY; \
- fi; \
- if [ ! -z $HTTPS_PROXY ] && [ -z $https_proxy ]; then \
-  https_proxy=$HTTPS_PROXY; \
- fi; \
- if [ ! -z $http_proxy ]; then \
-  npm config set proxy $http_proxy; \
- fi; \
- if [ ! -z $https_proxy ]; then \
-  npm config set https-proxy $https_proxy; \
- fi
+    if [ ! -z $HTTP_PROXY ] && [ -z $http_proxy ]; then \
+    http_proxy=$HTTP_PROXY; \
+    fi; \
+    if [ ! -z $HTTPS_PROXY ] && [ -z $https_proxy ]; then \
+    https_proxy=$HTTPS_PROXY; \
+    fi; \
+    if [ ! -z $http_proxy ]; then \
+    npm config set proxy $http_proxy; \
+    fi; \
+    if [ ! -z $https_proxy ]; then \
+    npm config set https-proxy $https_proxy; \
+    fi
