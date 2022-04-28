@@ -34,7 +34,7 @@ services:
 
   sawtooth-rest-api:
     container_name: rest-api
-    image: hyperledger/sawtooth-rest-api:1.0
+    image: hyperledger/sawtooth-rest-api:chime
     expose:
       - 8008
     ports:
@@ -46,7 +46,7 @@ services:
         --connect tcp://validator:4004
         --bind sawtooth-rest-api:8008
   settings-tp:
-    image: hyperledger/sawtooth-settings-tp:1.0
+    image: hyperledger/sawtooth-settings-tp:chime
     depends_on:
       - validator
     command: settings-tp -vv --connect tcp://validator:4004
@@ -58,7 +58,7 @@ services:
   #   entrypoint: identity-tp -vv -C tcp://validator:4004
   validator:
     container_name: validator
-    image: hyperledger/sawtooth-validator:1.0
+    image: hyperledger/sawtooth-validator:chime
     expose:
       - 4004
     ports:
@@ -67,7 +67,7 @@ services:
       bash -c "
         if [ ! -f /etc/sawtooth/keys/validator.priv ]; then
         sawadm keygen &&
-        sawtooth keygen my_key && sawtooth keygen registration && sawtooth keygen insurance && sawtooth keygen pollution && sawtooth keygen police && sawtooth keygen government &&
+        sawtooth keygen my_key  &&
         sawset genesis -k /root/.sawtooth/keys/my_key.priv &&
         sawadm genesis config-genesis.batch
         fi;
